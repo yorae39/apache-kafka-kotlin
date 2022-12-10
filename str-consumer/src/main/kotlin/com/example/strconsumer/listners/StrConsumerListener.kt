@@ -1,10 +1,11 @@
 package com.example.strconsumer.listners
 
+import com.example.strconsumer.custom.StrConsumerCustomListener
 import com.example.strconsumer.log.logger
-import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 
 @Component
+@StrConsumerCustomListener
 class StrConsumerListener {
 
     /*
@@ -16,8 +17,18 @@ class StrConsumerListener {
         SUFICENTES FICARA UM LISTENER SEM CONSEGUIR SE INSCREVER NO TÓPICO.
      */
 
-    @KafkaListener(groupId = "group-1", topics = ["str-topic"], containerFactory = "strContainerFactory")
-    fun listener(message: String) {
-        logger().info("Receive message: $message")
+    @StrConsumerCustomListener
+    fun create(message: String) {
+        logger().info("CREATE ::: Receive message: $message")
+    }
+
+    @StrConsumerCustomListener
+    fun log(message: String) {
+        logger().info("LOG ::: Receive message: $message")
+    }
+
+    @StrConsumerCustomListener(groupId = "group-2")
+    fun history(message: String) {
+        logger().info("HISTORY ::: Receive message: $message")
     }
 }
