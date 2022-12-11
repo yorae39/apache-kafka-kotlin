@@ -12,5 +12,7 @@ annotation class StrConsumerCustomListener(
     @get:AliasFor(annotation = KafkaListener::class, attribute = "containerFactory")
     val containerFactory: String = "strContainerFactory",
     @get:AliasFor(annotation = KafkaListener::class, attribute = "groupId")
-    val groupId: String = "group-1"
+    val groupId: String = "group-1",
+    @get:AliasFor(annotation = KafkaListener::class, attribute = "errorHandler")
+    val errorHandler: String = "errorCustomHandler"
 )
