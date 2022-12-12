@@ -6,7 +6,6 @@ import org.springframework.kafka.annotation.KafkaHandler
 import org.springframework.stereotype.Component
 
 @Component
-@StrConsumerCustomListener
 class StrConsumerListener {
 
     /*

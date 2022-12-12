@@ -9,16 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.core.ConsumerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.listener.RecordInterceptor
-import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-import java.lang.Exception
 
 
-@EnableKafka
 @Configuration
 class StringConsumerConfig {
 
@@ -31,8 +27,6 @@ class StringConsumerConfig {
         configs[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] = kafkaProperties.bootstrapServers
         configs[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
         configs[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
-        //configs[ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS] = StringDeserializer::class.java
-        //configs[ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS] = StringDeserializer::class.java
         return DefaultKafkaConsumerFactory(configs)
     }
 
@@ -53,7 +47,6 @@ class StringConsumerConfig {
             ): ConsumerRecord<String?, String?> {
                 if (record.value()?.contains("Teste") == true) {
                     logger().info("A palavra existe na mensagem!")
-
                 } else  {
                     logger().info("A palavra não existe na mensagem!")
                 }
@@ -62,6 +55,7 @@ class StringConsumerConfig {
 
             override fun success(record: ConsumerRecord<String?, String?>, consumer: Consumer<String?, String?>) {
                 logger().info("Sucesso!")
+                logger().info("Partition: ${record.partition()} and Offset: ${record.offset()}")
             }
 
             override fun failure(
@@ -74,5 +68,4 @@ class StringConsumerConfig {
             }
         }
     }
-
 }
