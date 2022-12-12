@@ -1,15 +1,19 @@
 package com.example.strproducer.services
 
 import com.example.strproducer.log.logger
+import lombok.RequiredArgsConstructor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
+@RequiredArgsConstructor
 @Service
-class StringProducerService {
+class StringProducerService(
+    val kafkaTemplate: KafkaTemplate<String, String>
+) {
 
-    @Autowired
-    private lateinit var kafkaTemplate: KafkaTemplate<String, String>
+    //@Autowired
+    //private lateinit var kafkaTemplate: KafkaTemplate<String, String>
 
     /*
         ENVIO DE MENSAGEM COM CALLBACK DE VALIDAÇÃO PARA LOGS
@@ -23,7 +27,7 @@ class StringProducerService {
                 logger().info("Send message with success : $message")
                 logger().info("Partition is :${result.recordMetadata.partition()} and Offset is : ${result.recordMetadata.offset()}")
             } else {
-                logger().error("Error send message!")
+                logger().error("Error send message: ${ex.cause}")
             }
         }
     }

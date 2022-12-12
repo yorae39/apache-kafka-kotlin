@@ -1,5 +1,6 @@
 package com.example.strproducer.config
 
+import lombok.RequiredArgsConstructor
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,6 +12,7 @@ import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.core.ProducerFactory
 
 @Configuration
+@RequiredArgsConstructor
 class StringProducerFactoryConfig {
 
     @Autowired
