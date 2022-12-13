@@ -1,6 +1,5 @@
 package com.lpa.jsonconsumer.log
 
-
 import org.apache.log4j.Logger
 import kotlin.reflect.full.companionObject
 
